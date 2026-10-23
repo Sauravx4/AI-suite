@@ -1,0 +1,219 @@
+{
+  "entities": {
+    "WorkspaceSnapshot": {
+      "title": "WorkspaceSnapshot",
+      "description": "Persistent workspace state document for INDOSATI Office Management Suite.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the authenticated user who owns the workspace.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "openingBalance": {
+          "type": "number",
+          "description": "Configured office opening cash balance in INR."
+        },
+        "expenseCategories": {
+          "type": "array",
+          "description": "List of configured expense categories.",
+          "maxLength": 50
+        },
+        "orders": {
+          "type": "array",
+          "description": "List of GeM CRM order objects.",
+          "maxLength": 500
+        },
+        "expenses": {
+          "type": "array",
+          "description": "List of daily office expense records.",
+          "maxLength": 1000
+        },
+        "advances": {
+          "type": "array",
+          "description": "List of office advance records.",
+          "maxLength": 500
+        },
+        "expensePersons": {
+          "type": "array",
+          "description": "List of staff members in the expense person roster.",
+          "maxLength": 100
+        },
+        "linkedApps": {
+          "type": "array",
+          "description": "List of connected or custom management app modules.",
+          "maxLength": 50
+        },
+        "notifications": {
+          "type": "array",
+          "description": "List of system notifications.",
+          "maxLength": 200
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when the workspace was initialized."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp of the last save."
+        }
+      },
+      "required": [
+        "ownerId",
+        "openingBalance",
+        "expenseCategories",
+        "orders",
+        "expenses",
+        "advances",
+        "expensePersons",
+        "linkedApps",
+        "notifications",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "GeMOrderDoc": {
+      "title": "GeMOrderDoc",
+      "description": "Individual GeM CRM order document stored in Firestore.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the user who created/owns this order.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "orderId": {
+          "type": "string",
+          "description": "GeM Order ID.",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "productName": {
+          "type": "string",
+          "description": "Product or item name.",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "buyerOrg": {
+          "type": "string",
+          "description": "Buyer organization name.",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "orderTotal": {
+          "type": "number",
+          "description": "Total order contract value in INR."
+        },
+        "orderStatus": {
+          "type": "string",
+          "description": "Order workflow status.",
+          "enum": ["Draft", "Confirmed", "Dispatched", "Delivered", "CRAC Generated", "Closed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last update timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "orderId",
+        "productName",
+        "buyerOrg",
+        "orderTotal",
+        "orderStatus",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "ExpenseDoc": {
+      "title": "ExpenseDoc",
+      "description": "Daily office expense document stored in Firestore.",
+      "type": "object",
+      "properties": {
+        "ownerId": {
+          "type": "string",
+          "description": "UID of the user who recorded the expense.",
+          "minLength": 1,
+          "maxLength": 128,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "expenseId": {
+          "type": "string",
+          "description": "Expense identifier.",
+          "minLength": 1,
+          "maxLength": 100,
+          "pattern": "^[a-zA-Z0-9_\\-]+$"
+        },
+        "amount": {
+          "type": "number",
+          "description": "Expense amount in INR."
+        },
+        "category": {
+          "type": "string",
+          "description": "Expense category.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "madeBy": {
+          "type": "string",
+          "description": "Person who took money for the expense.",
+          "minLength": 1,
+          "maxLength": 200
+        },
+        "description": {
+          "type": "string",
+          "description": "Justification or description of the expense.",
+          "minLength": 1,
+          "maxLength": 1000
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Update timestamp."
+        }
+      },
+      "required": [
+        "ownerId",
+        "expenseId",
+        "amount",
+        "category",
+        "madeBy",
+        "description",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/workspaces/{workspaceId}": {
+      "schema": { "$ref": "#/entities/WorkspaceSnapshot" },
+      "description": "Stores the user or organization workspace snapshot with native arrays and maps."
+    },
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/GeMOrderDoc" },
+      "description": "Stores individual GeM CRM orders."
+    },
+    "/expenses/{expenseId}": {
+      "schema": { "$ref": "#/entities/ExpenseDoc" },
+      "description": "Stores individual daily office expense records."
+    }
+  }
+}

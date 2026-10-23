@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e3a8a" />
+      <stop offset="100%" stop-color="#1e40af" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle with safe margin -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+
+  <!-- Outer subtle tech border -->
+  <rect x="24" y="24" width="464" height="464" rx="88" fill="none" stroke="#60a5fa" stroke-opacity="0.25" stroke-width="4" stroke-dasharray="16 8" />
+
+  <!-- Central Shield Crest -->
+  <g filter="url(#shadow)">
+    <path d="M 256,90 L 370,140 C 370,260 320,350 256,400 C 192,350 142,260 142,140 Z" fill="#ffffff" fill-opacity="0.08" stroke="url(#goldGrad)" stroke-width="6" stroke-linejoin="round" />
+  </g>
+
+  <!-- Stylized Geometric "I" & Dual Pillar Motif representing CRM + Expense Synergy -->
+  <!-- Left Pillar (CRM / Orders) -->
+  <path d="M 200,180 L 235,180 C 240,180 244,184 244,189 L 244,320 C 244,325 240,329 235,329 L 200,329 C 195,329 191,325 191,320 L 191,189 C 191,184 195,180 200,180 Z" fill="url(#accentGrad)" />
+
+  <!-- Right Pillar (Funds / Expenses) -->
+  <path d="M 277,180 L 312,180 C 317,180 321,184 321,189 L 321,320 C 321,325 317,329 312,329 L 277,329 C 272,329 268,325 268,320 L 268,189 C 268,184 272,180 277,180 Z" fill="url(#goldGrad)" />
+
+  <!-- Horizontal Cross Beam (Unified Suite) -->
+  <rect x="175" y="235" width="162" height="24" rx="6" fill="#ffffff" filter="url(#shadow)" />
+
+  <!-- Top Crown Jewel / Star -->
+  <circle cx="256" cy="148" r="14" fill="url(#goldGrad)" />
+
+  <!-- Bottom Balance Dot -->
+  <circle cx="256" cy="342" r="8" fill="#38bdf8" />
+</svg>

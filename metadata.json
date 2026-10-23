@@ -1,0 +1,6 @@
+{
+  "name": "INDOSATI Office Management Suite",
+  "description": "Unified desktop and web office management suite combining GeM CRM and Daily Expense tracking.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

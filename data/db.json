@@ -1,0 +1,279 @@
+{
+  "openingBalance": 50000,
+  "orders": [
+    {
+      "id": "GEM-2026-9042",
+      "gemOrderDate": "2026-10-04",
+      "dispatchDeadline": "2026-10-21",
+      "productName": "All-In-One Solar Street Light 60W with MPPT Controller",
+      "quantity": 120,
+      "buyerName": "Er. Rajeshwar Singh, Executive Engineer (Electrical)",
+      "buyerOrg": "Public Works Department (PWD), Zone-2, Jaipur, Rajasthan",
+      "buyerAddress": "PWD Electrical Division, Jacob Road, Civil Lines, Jaipur - 302006",
+      "buyerContact": "+91 94140 55823",
+      "buyerEmail": "ee.pwd.elec.jpr@rajasthan.gov.in",
+      "orderTotal": 1140000,
+      "orderStatus": "Confirmed",
+      "dispatchDate": null,
+      "transporterName": "Gati-KWE Logistics Ltd.",
+      "docketNumber": null,
+      "buyerReceiptDate": null,
+      "cracGenerated": false,
+      "cracDate": null,
+      "notes": "Ministry approved BIS certified batch. Keep waterproof wrapping.",
+      "payments": [
+        {
+          "id": "PMT-9042-1",
+          "amount": 250000,
+          "paymentDate": "2026-10-06",
+          "reference": "RTGS-P9042-ADVANCE",
+          "paymentMode": "Bank Transfer (RTGS)"
+        },
+        {
+          "id": "PMT-1792236424457",
+          "amount": 200000,
+          "paymentDate": "2026-10-17",
+          "reference": "RTGS-PWD-SECOND",
+          "paymentMode": "Bank Transfer (RTGS/NEFT)"
+        }
+      ],
+      "history": [
+        {
+          "id": "HIST-1",
+          "timestamp": "2026-10-04T10:30:00Z",
+          "action": "Order Accepted",
+          "details": "GeM Contract accepted and confirmed by INDOSATI Sales Desk",
+          "performedBy": "Saurav Mourya"
+        },
+        {
+          "id": "HIST-2",
+          "timestamp": "2026-10-06T15:00:00Z",
+          "action": "Advance Payment Received",
+          "details": "Recorded advance payment of ₹2,50,000 via RTGS",
+          "performedBy": "Finance Desk"
+        },
+        {
+          "id": "HIST-1792236424457",
+          "timestamp": "2026-10-17T11:27:04.457Z",
+          "action": "Payment Receipt Added",
+          "details": "Received ₹2,00,000 via Bank Transfer (RTGS/NEFT). Remaining balance: ₹6,90,000",
+          "performedBy": "Saurav Mourya"
+        }
+      ],
+      "createdAt": "2026-10-04T10:30:00Z",
+      "updatedAt": "2026-10-17T11:27:04.457Z"
+    },
+    {
+      "id": "GEM-2026-8819",
+      "gemOrderDate": "2026-09-22",
+      "dispatchDeadline": "2026-10-12",
+      "productName": "High Mast LED Floodlight Luminaires 200W",
+      "quantity": 45,
+      "buyerName": "Col. Sanjeev Varma, Staff Officer",
+      "buyerOrg": "Military Engineer Services (MES), Western Command",
+      "buyerAddress": "HQ Chief Engineer, Chandimandir Military Cantonment, Haryana - 134107",
+      "buyerContact": "+91 98140 22319",
+      "buyerEmail": "so1.chandimandir@mes.gov.in",
+      "orderTotal": 785000,
+      "orderStatus": "Dispatched",
+      "dispatchDate": "2026-10-10",
+      "transporterName": "VRL Logistics Ltd.",
+      "docketNumber": "VRL-CHD-881944",
+      "buyerReceiptDate": "2026-10-14",
+      "cracGenerated": false,
+      "cracDate": null,
+      "notes": "Consignment delivered at Chandimandir depot. Awaiting CRAC certificate upload on GeM portal.",
+      "payments": [
+        {
+          "id": "PMT-8819-1",
+          "amount": 500000,
+          "paymentDate": "2026-10-12",
+          "reference": "NEFT-MES-500K",
+          "paymentMode": "Bank Transfer (NEFT)"
+        }
+      ],
+      "history": [
+        {
+          "id": "HIST-3",
+          "timestamp": "2026-09-22T09:15:00Z",
+          "action": "Order Accepted",
+          "details": "GeM direct purchase order verified",
+          "performedBy": "Saurav Mourya"
+        },
+        {
+          "id": "HIST-4",
+          "timestamp": "2026-10-10T16:45:00Z",
+          "action": "Dispatched via VRL Logistics",
+          "details": "Docket VRL-CHD-881944 issued from Gurgaon Hub",
+          "performedBy": "Warehouse Operations"
+        }
+      ],
+      "createdAt": "2026-09-22T09:15:00Z",
+      "updatedAt": "2026-10-14T11:00:00Z"
+    },
+    {
+      "id": "GEM-2026-8510",
+      "gemOrderDate": "2026-09-10",
+      "dispatchDeadline": "2026-09-30",
+      "productName": "Smart Grid Energy Metering System 3-Phase",
+      "quantity": 80,
+      "buyerName": "Dr. M. K. Narayanan, Director of Works",
+      "buyerOrg": "Bharat Heavy Electricals Limited (BHEL), Bhopal Unit",
+      "buyerAddress": "BHEL Complex, Piplani, Bhopal, Madhya Pradesh - 462022",
+      "buyerContact": "+91 755 250 3381",
+      "buyerEmail": "works.purchase@bhel.in",
+      "orderTotal": 1850000,
+      "orderStatus": "CRAC Generated",
+      "dispatchDate": "2026-09-25",
+      "transporterName": "SafeXpress Logistics",
+      "docketNumber": "SFX-BPL-77312",
+      "buyerReceiptDate": "2026-09-28",
+      "cracGenerated": true,
+      "cracDate": "2026-10-02",
+      "notes": "CRAC issued with zero rejection. Full payment in progress.",
+      "payments": [
+        {
+          "id": "PMT-8510-1",
+          "amount": 1000000,
+          "paymentDate": "2026-10-05",
+          "reference": "RTGS-BHEL-001",
+          "paymentMode": "Bank Transfer (RTGS)"
+        },
+        {
+          "id": "PMT-8510-2",
+          "amount": 850000,
+          "paymentDate": "2026-10-15",
+          "reference": "RTGS-BHEL-002",
+          "paymentMode": "Bank Transfer (RTGS)"
+        }
+      ],
+      "history": [
+        {
+          "id": "HIST-5",
+          "timestamp": "2026-10-02T14:20:00Z",
+          "action": "CRAC Uploaded",
+          "details": "CRAC #CRAC-BHEL-2026-99 issued with 100% acceptance",
+          "performedBy": "Compliance Desk"
+        },
+        {
+          "id": "HIST-6",
+          "timestamp": "2026-10-15T18:00:00Z",
+          "action": "Final Payment Received",
+          "details": "Full contract value reconciled. Order fully cleared.",
+          "performedBy": "Finance Desk"
+        }
+      ],
+      "createdAt": "2026-09-10T11:00:00Z",
+      "updatedAt": "2026-10-15T18:00:00Z"
+    }
+  ],
+  "advances": [
+    {
+      "id": "ADV-2026-01",
+      "date": "2026-10-01",
+      "amount": 150000,
+      "source": "Director Current Account (HDFC Bank)",
+      "description": "Monthly office operational advance for October operations",
+      "createdAt": "2026-10-01T09:00:00Z"
+    },
+    {
+      "id": "ADV-2026-02",
+      "date": "2026-10-11",
+      "amount": 75000,
+      "source": "Company Main Account - Petty Cash Top-up",
+      "description": "Urgent transit logistics & field packaging advance",
+      "createdAt": "2026-10-11T11:30:00Z"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "EXP-2026-101",
+      "date": "2026-10-05",
+      "amount": 16500,
+      "category": "Office Rent & Utilities",
+      "madeBy": "Rajesh Gupta",
+      "forPersonOrDept": "Head Office Administration",
+      "description": "Electricity & High-speed fiber broadband bill for October",
+      "linkedOrderId": null,
+      "paymentMode": "UPI",
+      "receiptName": "broadband_bill_oct.pdf",
+      "createdAt": "2026-10-05T14:10:00Z"
+    },
+    {
+      "id": "EXP-2026-102",
+      "date": "2026-10-09",
+      "amount": 28400,
+      "category": "Packaging & Materials",
+      "madeBy": "Vikram Singh",
+      "forPersonOrDept": "Warehouse Packaging Team",
+      "description": "Heavy duty wooden crates and shock-absorbent foam for GeM MES Chandimandir dispatch",
+      "linkedOrderId": "GEM-2026-8819",
+      "paymentMode": "Bank Transfer",
+      "receiptName": "wooden_crates_tax_inv.pdf",
+      "createdAt": "2026-10-09T16:20:00Z"
+    },
+    {
+      "id": "EXP-2026-103",
+      "date": "2026-10-10",
+      "amount": 32000,
+      "category": "Logistics & Dispatch",
+      "madeBy": "Vikram Singh",
+      "forPersonOrDept": "Shipping & Freight",
+      "description": "VRL Express freight charges from Gurgaon hub to Chandimandir Cantonment",
+      "linkedOrderId": "GEM-2026-8819",
+      "paymentMode": "Bank Transfer",
+      "receiptName": "vrl_freight_receipt.pdf",
+      "createdAt": "2026-10-10T17:00:00Z"
+    },
+    {
+      "id": "EXP-2026-104",
+      "date": "2026-10-13",
+      "amount": 8500,
+      "category": "Travel & Buyer Visit",
+      "madeBy": "Saurav Mourya",
+      "forPersonOrDept": "Business Development",
+      "description": "Site inspection & client meeting with PWD Electrical Division in Jaipur",
+      "linkedOrderId": "GEM-2026-9042",
+      "paymentMode": "Company Card",
+      "receiptName": "toll_fuel_jaipur_exp.pdf",
+      "createdAt": "2026-10-13T19:30:00Z"
+    },
+    {
+      "id": "EXP-2026-105",
+      "date": "2026-10-15",
+      "amount": 4200,
+      "category": "Tea & Refreshments",
+      "madeBy": "Pooja Sharma",
+      "forPersonOrDept": "Pantry & Staff Welfare",
+      "description": "Monthly office pantry tea, coffee, mineral water and guest snacks",
+      "linkedOrderId": null,
+      "paymentMode": "Cash",
+      "receiptName": "pantry_voucher_oct.pdf",
+      "createdAt": "2026-10-15T11:45:00Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "NOTIF-1",
+      "type": "DISPATCH_REMINDER",
+      "title": "GeM Dispatch Deadline Approaching (4 Days Left)",
+      "message": "Order GEM-2026-9042 for PWD Jaipur must be dispatched by 21-Oct-2026. Prepare packaging and booking.",
+      "targetModule": "crm",
+      "targetId": "GEM-2026-9042",
+      "isRead": false,
+      "severity": "warning",
+      "timestamp": "2026-10-17T08:00:00Z"
+    },
+    {
+      "id": "NOTIF-2",
+      "type": "PENDING_CRAC",
+      "title": "CRAC Acceptance Pending for Delivered Consignment",
+      "message": "Order GEM-2026-8819 was delivered to MES Chandimandir on 14-Oct-2026. CRAC is pending generation.",
+      "targetModule": "crm",
+      "targetId": "GEM-2026-8819",
+      "isRead": false,
+      "severity": "info",
+      "timestamp": "2026-10-16T10:00:00Z"
+    }
+  ]
+}

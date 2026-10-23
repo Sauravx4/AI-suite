@@ -1,0 +1,251 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Pillar 1: Global Safety Net (Default Deny)
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Primitives
+    function isValidId(id) {
+      return id is string && id.size() >= 1 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isAdmin() {
+      return isSignedIn() && (
+        request.auth.token.email == 'sauravmourya54@gmail.com' ||
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid))
+      );
+    }
+
+    // Validation Blueprint: WorkspaceSnapshot
+    function isValidWorkspaceSnapshot(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'openingBalance',
+          'expenseCategories',
+          'orders',
+          'expenses',
+          'advances',
+          'expensePersons',
+          'linkedApps',
+          'notifications',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'openingBalance',
+          'expenseCategories',
+          'orders',
+          'expenses',
+          'advances',
+          'expensePersons',
+          'linkedApps',
+          'notifications',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        isValidId(data.ownerId) &&
+        data.ownerId == request.auth.uid &&
+        data.openingBalance is number && data.openingBalance >= 0 &&
+        data.expenseCategories is list && data.expenseCategories.size() <= 50 &&
+        (data.expenseCategories.size() == 0 || (data.expenseCategories[0] is string && data.expenseCategories[0].size() <= 100)) &&
+        data.orders is list && data.orders.size() <= 500 &&
+        data.expenses is list && data.expenses.size() <= 1000 &&
+        data.advances is list && data.advances.size() <= 500 &&
+        data.expensePersons is list && data.expensePersons.size() <= 100 &&
+        data.linkedApps is list && data.linkedApps.size() <= 50 &&
+        data.notifications is list && data.notifications.size() <= 200 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    // Validation Blueprint: GeMOrderDoc
+    function isValidGeMOrderDoc(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'orderId',
+          'productName',
+          'buyerOrg',
+          'orderTotal',
+          'orderStatus',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'orderId',
+          'productName',
+          'buyerOrg',
+          'orderTotal',
+          'orderStatus',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        isValidId(data.ownerId) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.orderId) &&
+        data.productName is string && data.productName.size() >= 1 && data.productName.size() <= 500 &&
+        data.buyerOrg is string && data.buyerOrg.size() >= 1 && data.buyerOrg.size() <= 500 &&
+        data.orderTotal is number && data.orderTotal >= 0 &&
+        data.orderStatus is string &&
+        data.orderStatus in ['Draft', 'Confirmed', 'Dispatched', 'Delivered', 'CRAC Generated', 'Closed'] &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    // Validation Blueprint: ExpenseDoc
+    function isValidExpenseDoc(data) {
+      return data.keys().hasAll([
+          'ownerId',
+          'expenseId',
+          'amount',
+          'category',
+          'madeBy',
+          'description',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        data.keys().hasOnly([
+          'ownerId',
+          'expenseId',
+          'amount',
+          'category',
+          'madeBy',
+          'description',
+          'createdAt',
+          'updatedAt'
+        ]) &&
+        isValidId(data.ownerId) &&
+        data.ownerId == request.auth.uid &&
+        isValidId(data.expenseId) &&
+        data.amount is number && data.amount > 0 &&
+        data.category is string && data.category.size() >= 1 && data.category.size() <= 200 &&
+        data.madeBy is string && data.madeBy.size() >= 1 && data.madeBy.size() <= 200 &&
+        data.description is string && data.description.size() >= 1 && data.description.size() <= 1000 &&
+        data.createdAt is timestamp &&
+        data.updatedAt is timestamp;
+    }
+
+    // Collection: /workspaces/{workspaceId}
+    match /workspaces/{workspaceId} {
+      allow get: if isSignedIn() && isValidId(workspaceId) && (existing().ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+
+      allow create: if isSignedIn() &&
+        isValidId(workspaceId) &&
+        isValidWorkspaceSnapshot(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() &&
+        isValidId(workspaceId) &&
+        isValidWorkspaceSnapshot(incoming()) &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (
+          isAdmin() ||
+          (
+            existing().ownerId == request.auth.uid &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'openingBalance',
+              'expenseCategories',
+              'orders',
+              'expenses',
+              'advances',
+              'expensePersons',
+              'linkedApps',
+              'notifications',
+              'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isSignedIn() && isValidId(workspaceId) && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+
+    // Collection: /orders/{orderId}
+    match /orders/{orderId} {
+      allow get: if isSignedIn() && isValidId(orderId) && (existing().ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+
+      allow create: if isSignedIn() &&
+        isValidId(orderId) &&
+        isValidGeMOrderDoc(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() &&
+        isValidId(orderId) &&
+        isValidGeMOrderDoc(incoming()) &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (
+          isAdmin() ||
+          (
+            existing().ownerId == request.auth.uid &&
+            existing().orderStatus != 'Closed' &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'productName',
+              'buyerOrg',
+              'orderTotal',
+              'orderStatus',
+              'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isSignedIn() && isValidId(orderId) && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+
+    // Collection: /expenses/{expenseId}
+    match /expenses/{expenseId} {
+      allow get: if isSignedIn() && isValidId(expenseId) && (existing().ownerId == request.auth.uid || isAdmin());
+      allow list: if isSignedIn() && (resource.data.ownerId == request.auth.uid || isAdmin());
+
+      allow create: if isSignedIn() &&
+        isValidId(expenseId) &&
+        isValidExpenseDoc(incoming()) &&
+        incoming().createdAt == request.time &&
+        incoming().updatedAt == request.time;
+
+      allow update: if isSignedIn() &&
+        isValidId(expenseId) &&
+        isValidExpenseDoc(incoming()) &&
+        incoming().ownerId == existing().ownerId &&
+        incoming().createdAt == existing().createdAt &&
+        incoming().updatedAt == request.time &&
+        (
+          isAdmin() ||
+          (
+            existing().ownerId == request.auth.uid &&
+            incoming().diff(existing()).affectedKeys().hasOnly([
+              'amount',
+              'category',
+              'madeBy',
+              'description',
+              'updatedAt'
+            ])
+          )
+        );
+
+      allow delete: if isSignedIn() && isValidId(expenseId) && (existing().ownerId == request.auth.uid || isAdmin());
+    }
+  }
+}
